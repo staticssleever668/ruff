@@ -84,6 +84,9 @@ pub fn is_property(checker: &Checker, decorator_list: &[Expr]) -> bool {
             .map_or(false, |call_path| {
                 call_path.as_slice() == ["", "property"]
                     || call_path.as_slice() == ["functools", "cached_property"]
+                    // `@property` alternative used in PyGObject for GObject objects.
+                    || call_path.as_slice() == ["gi", "repository", "GObject", "property"]
+                    || call_path.as_slice() == ["gi", "repository", "GObject", "Property"]
             })
     })
 }
